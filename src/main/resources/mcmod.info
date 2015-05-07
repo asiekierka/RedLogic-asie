@@ -1,0 +1,26 @@
+[
+	{
+		"authors": [
+			"immibis"
+		],
+		"credits": "",
+		"dependants": [],
+		"dependencies": [
+			"ImmibisCore@[59.1.0,]"
+		],
+		"description": "Replacement for RP2 Wiring, Logic and Control",
+		"logoFile": "",
+		"mcversion": "1.7.10",
+		"modid": "RedLogic",
+		"name": "RedLogic",
+		"parent": "",
+		"requiredMods": [
+			"ImmibisCore@[59.1.0,]"
+		],
+		"screenshots": [],
+		"updateUrl": "",
+		"url": "http://www.minecraftforum.net/topic/1852277-152-redlogic-wip-replacement-for-rp2-wiringlogiccontrollighting/",
+		"useDependencyInformation": "true",
+		"version": "59.1.10"
+	}
+]

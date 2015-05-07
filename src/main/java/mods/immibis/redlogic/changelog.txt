@@ -1,0 +1,314 @@
+59.1.10:
+* Microblock API update. (Goes with Immibis Core 59.1.0 and Immibis's Microblocks 59.1.0)
+
+59.1.9:
+* Added debug option no-wire-chunk-updates.
+* Added /rldebugclient, which allows any player to activate debug features on their client, without being opped.
+
+59.1.8:
+* Screwdrivers, schematic compilers, chip fabricators, insulated wires, and all types of lamps can be crafted from any ore-dictionary dye.
+* Insulated wire can be re-dyed in a crafting table.
+* Insulated wire can be crafted or re-dyed one-at-a-time (instead of 8); it will cost more dye.
+* Partially rewrote how wire signals propagate, hopefully fixing the last cases where certain wire configurations cause tick lag when turning off.
+* Also fixed certain configurations of array cells causing tick lag when turned off. There might still be similar bugs with array cells (as they haven't been fully updated), but I couldn't find any.
+* Requires Immibis Core 59.0.6.
+
+59.1.7:
+* Fixed signals rarely propagating through microblocks in some wire configurations.
+* Fixed wires still connecting to (but not affecting) disabled inputs of some types of gates.
+* Cube-shaped lamps should be able to be painted with IC2 painters and similar items.
+* Non-cube-shaped lamps should be able to be painted with IC2 painters and similar items.
+* Non-cube-shaped lamps can be painted by right-clicking with dye. (Cube-shaped lamps already had this feature)
+
+59.1.6:
+* Fixed some wire configurations causing server lag.
+
+59.1.5:
+* Fixed insulated wire connections around corners being broken.
+
+59.1.4:
+* Fixed non-cubic lamps not dropping when the block they're attached to is broken.
+
+59.1.3:
+* Fixed counters in integrated circuits.
+
+59.1.2:
+* Fixed machines not getting power properly when your preferredEnergySystem setting is IC2.
+
+59.1.1:
+* Fixed a potential exploit (which is theoretical, and has not been confirmed to be possible).
+
+59.1.0:
+* Removed a leftover feature that allows players to create circuits for free once they had a photomask.
+* Schematics and photomasks do not appear in the creative menu.
+* Timers, state cells, sequencers and toggle latches now make an irritating clicking noise.
+* Added a config option to disable gate sounds.
+* The animation on timers is a bit less glitchy.
+* Timers will sometimes click twice if you pause and unpause the game. This seems to be a vanilla bug as it can also affect wooden buttons and block placing sounds.
+* Tweaked the animation of sequencers. The closest output to the pointer will turn on, instead of the last one it passed. (This is rather subtle and only affects visuals) 
+
+59.0.7:
+* Chip compilers and chip fabricators will use whatever your preferredEnergySystem option is set to.
+* Increased the energy use of chip compilers and chip fabricators.
+* Fixed the redstone digitizer displaying "redlogic.chipscanner.roomcoords" instead of the actual coordinates.
+
+59.0.6:
+* Fixed microblocks attached to array cells becoming invisible after reloading the chunk.
+
+59.0.5:
+* Removed BuildCraft integration, at the recommendation of the BuildCraft developer who originally added it.
+
+59.0.4:
+* Added lumar toggle buttons/plates. Recipe is similar to self-latching buttons, but with a toggle latch instead of an RS latch.
+* Fixed null/invert/non-invert cells not updating some other blocks correctly, including logic gates.
+* The redstone digitizer will not start scanning if it can't find the cleanroom boundaries.
+* The messages "Room coords: X,Y,Z to X,Y,Z" and "No room demarcation found" are translatable.
+
+
+
+59.0.3:
+* Removed "invalid item" gate from creative mode inventory.
+* Fixed a particular wire layout causing enormous server lag. (Warning: fix is not extensively tested!)
+
+59.0.2:
+* Fixed non-invert cell recipe.
+
+59.0.0:
+* Updated to 1.7.10.
+
+58.1.3:
+* Fixed the visual bug with gates in GUIs.
+
+58.1.2:
+* Fixed lamps not emitting light.
+* Fixed shaped lamps being only placeable on non-solid blocks (instead of solid blocks).
+
+58.1.1:
+* Fixed mod not loading.
+
+58.1.0:
+* Official update to 1.7.2.
+* Fixed gates not working correctly when flipped.
+
+57.3.1:
+* Removed accidental requirement of CodeChickenLib.
+
+57.3.0:
+* Added null cells, invert cells, and non-invert cells.
+* Null/invert/non-invert cells can be used in miniaturized circuits.
+* Powered red alloy wires glow in the dark.
+* Redstone Digitizers and integrated circuits can be rotated.
+* Redstone Digitizers have a direction indicator on the top and bottom.
+* Integrated circuits have a direction indicator on the top.
+* Fixed wire rendering not using "face-specific shading". This makes them look more 3D.
+* Changed the way that outside corners look when connecting different types of cables.
+  (e.g: put bundled cable on any side of a block, and insulated wire on any other side except the opposite one)
+* Fixed z-fighting in several situations.
+* Gates can only be placed on a solid surface.
+* Integrated circuits are now blocks in your inventory. If you have the old items, right-click anywhere to convert them.
+* Fixed cage lamps sometimes rendering with the wrong brightness.
+* Fixed z-fighting on "inside corners" of bundled cable.
+* Fixed all texture mismatches on bundled cable (where the red and blue sides were swapped).
+* Fixed some texture mismatches on freestanding bundled cable. It's not possible to fix all of these.
+* Fixed block breaking particles for gates.
+* Fixed block breaking particles for wires.
+* Fixed lighting on dropped gate items.
+* Fixed lighting on dropped wire items.
+* Fixed not being able to place gates in the same block space as existing microblocks.
+* Fixed creative middle-click on cleanroom air filters.
+* Fixed client-side wire items sometimes being dropped (items that can't be picked up and disappear when the world is reloaded).
+
+57.2.9:
+* Fixed an exploitable server crash.
+
+57.2.8:
+* Added recipe for RedLogic comparators.
+
+57.2.7:
+* Added comparator gate. Works with vanilla redstone.
+  Analog redstone on RedLogic wire is slightly different from vanilla redstone.
+  Converting analog signals from RedLogic to vanilla is a bit weird.
+* Fixed flat and cage lamps not dropping when broken normally.
+* Fixed flat and cage lamps having wrong particles when broken.
+* Fixed flat and cage lamps being highlighted when broken.
+* Did not added the breaking animation to flat and cage lamps (similar to chests) - it would not be easy to make it work without being glitchy (not incredibly hard, just annoying like most rendering).
+
+
+57.2.6:
+* Freestanding wires work with integrated circuits.
+* Fixed a potential error when scanning circuits.
+* Fixed circuit compilers always facing the same way.
+* Fixed chip fabricators always facing the same way.
+* Decreased chip fabricator power cost. The cost is now 4000 EU or 1600 MJ - one coal piece - per chip. Still takes 20 seconds minimum.
+
+57.2.5:
+* Fixed lumar buttons and plates not dropping when the block they're attached to is broken.
+
+57.2.4:
+* Fixed lumar buttons and plates being unbreakable.
+
+57.2.3:
+* Fixed crash when opening gate GUIs.
+
+57.2.2:
+* Gates that don't initialize properly should not cause crashes (but they still won't work).
+  Untested because I still can't reproduce this easily.
+* Fixed timer and state cell GUI background.
+* Fixed the block breaking animation on gates.
+
+57.2.1:
+* Added missing recipes for bundled AND/OR/NOT/XOR gates.
+
+57.2.0:
+* Added lumar buttons.
+* Added lumar plates.
+* Lumar buttons and plates support microblocks. Since microblocks don't block right-clicks you can make hidden buttons :O
+* There are three types - normal, latchable, self-latching.
+* Normal buttons are normal. They light up when not pressed and not receiving a redstone signal.
+* Latchable buttons emit a short pulse, then stay pressed if something else is providing power.
+* Self-latching buttons emit a short pulse, then stay pressed until something else provides power. Their output is inverted.
+* Shift-right-click a button or plate with a screwdriver to change the light mode.
+* All kinds can be recoloured by crafting them with a dye.
+
+57.1.0:
+* Added cage lamps and flat lamps.
+
+57.0.3:
+* Fixed gates having invisible sides.
+
+57.0.2:
+* Fixed lamps breaking instantly.
+* Possibly fixed crash when breaking a gate with NEI Highlight Tips on.
+
+57.0.1:
+* Possibly fixed a crash on laggy servers?
+
+57.0.0:
+* Updated to Minecraft 1.6.4.
+* Updated to experimental IC2.
+
+56.1.1:
+* Fixed a crash without Immibis's Microblocks installed.
+
+56.1.0:
+* Added bundled AND, OR, XOR and NOT gates. There is minor Z-fighting.
+
+* Added a way to shrink circuits. The equipment required is quite expensive, but the individual chips are not.
+* Added Cleanroom Wall, Cleanroom Air Filter, I/O Pin Marker, Redstone Digitizer, Schematic Compiler, Chip Fabricator.
+* Added Schematic, Photomask and Integrated Circuit items.
+* In this version repeaters, sequencers, state cells, randomizers, and non-RedLogic components (including vanilla) cannot be shrunk.
+* In this version integrated circuits cannot be rotated and have no direction indicator.
+
+* Fixed crash with red alloy wire near TC drawbridges? It still might not work right.
+* Fixed counter GUI background.
+* Fixed pistons flickering when signal strength became weaker without turning off.
+* Might fix red alloy wires not working with WRCBE wireless transceivers.
+* Might work without Immibis's Microblocks installed.
+
+56.0.2:
+* Added a recipe for insulated wire using wool.
+* Fixed microblock placement check on gates being backwards.
+
+56.0.1:
+* Config option for minimum interval of timers and sequencers.
+* NEI shouldn't show powered lamps and powered indicator lamps.
+* Lamps have halos, except for indicator lamps, because they look stupid in the dark.
+* Right-click a lamp with a dye to recolour it. The dye is not used up.
+
+56.0.0:
+* Updated to Minecraft 1.6.2.
+* The coloured part of lamps is brighter and more symmetrical.
+* Powered indicator lamps are visible even in complete darkness, even though they don't emit light.
+
+55.4.1:
+* Fixed freestanding red alloy wire not emitting a signal.
+* Fixed torches on gates having the wrong texture after changing texture packs.
+* Maybe fix the crash with unmelting ice?
+
+55.4.0:
+* Fixed some API derps before anyone has a chance to rely on them.
+* XOR gates, XNOR gates, repeaters and pulse formers do not connect to wires on unused sides.
+* Added Bundled Latch, Bundled Relay and Bundled Multiplexer.
+* Added cube-shaped lamps.
+* Wire can be placed on pistons and glowstone.
+
+55.3.3:
+* Fixed red alloy wires connecting to some blocks on the right sides (including WRCBE).
+* Fixed crash when red alloy wire is next to a WRCBE block on certain sides (related to above).
+
+55.3.2:
+* Toggle flipflops have levers on them.
+* Added D-latch and D-flipflop (Or D-flop for short).
+  Flipflops trigger when their input turns on, and latches trigger constantly while the input is on. 
+* T-latch renamed to T-flipflop to be consistent.
+* Maybe fixed a crash when placing cable.
+
+55.3.1:
+* Fixed gates visually connecting to freestanding wire.
+
+55.3.0:
+* Added jacketed wire.
+* Fixed rendering of outside corners where different types of wire connect.
+* Fixed things not colliding with microblocks on wires.
+* Fixed bundled cables not causing circuits to update?
+
+55.2.1:
+* Fixed outside corners not rendering properly (again) on plain red alloy wire.
+
+55.2.0:
+* Added bundled cable (yes, the texture doesn't match up on some corners).
+
+55.1.2:
+* Fixed outside corners not rendering properly (again).
+* Fixed Z-fighting on the side of corners and T-intersections.
+* Wires can't be collided with.
+
+55.1.1:
+* Fixed vanilla redstone input to gates.
+* Outside corners render now. They have some Z-fighting (flickering) though.
+
+55.1.0:
+* Added insulated wire.
+* Shift-click on a NOT gate with a screwdriver to disable outputs.
+* Wires cannot be washed away by water.
+* New bug: sometimes you get stuck on the edge of wire that you just placed.
+  Seems to be an unavoidable side effect of the water fix, unless Mojang or Forge changes it.
+* Gates internally use strength 0-255 instead of strength 0-15.
+  Existing gates will have the wrong inputs and outputs until they get a block update.
+* Improved wire rendering (fixed squished textures and Z-fighting).
+  Inside corners have Z-fighting and outside corners don't render because I haven't done those yet.
+* Fixed being able to put any size cover on a wire.
+* Fixed wire breaking particles.
+* Fixed timers emitting a pulse immediately after being started.
+
+* Added /rldebug command. See /help for syntax. Admin-only.
+* 'wire-reading' debug feature lets you right-click a wire to see the server-side and client-side strength.
+  Will not work properly in SMP.
+* 'wire-lag-particles' debug feature creates:
+  * fire particles when a wire causes a block update.
+  * bonemeal/villager particles when a wire sends a packet to the client.
+  Recommended only for very small tests!
+* 'wire-debug-particles' debug feature creates bonemeal/villager particles whenever a wire's strength changes.
+
+55.0.2:
+* Wires power blocks next to them, as in RP2.
+
+55.0.1:
+* Fixed timer and counter GUI backgrounds.
+* Fixed rounding in timer GUI.
+* Fixed texture on top and bottom of pointers.
+* Fixed wires not receiving power from the block they're on.
+* Fixed wires not providing power to the block they're on.
+* Immibis's Microblocks 55.0.3 is required to fix another bug related to block updating.
+* Red alloy wires will not power vanilla redstone - use a buffer or repeater. They still receive power from vanilla redstone.
+* Fixed a crash when placing gates.
+* Fixed wires popping off covers if you place a cover, then a wire on the cover, then a wire behind the cover.
+* Fixed wires forming one-way connections through microblocks in certain arrangements.
+* Fixed client-side wire drops.
+* You can now right-click a toggle latch to change its state.
+
+55.0.0:
+* Fixed version number.
+
+51.0.0:
+* Initial release, with only red alloy wires and most gates from RP2.

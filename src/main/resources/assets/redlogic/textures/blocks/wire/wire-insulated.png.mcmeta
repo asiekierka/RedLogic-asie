@@ -1,0 +1,21 @@
+{"immibis.core.sprites": {"spriteSize": 16, "sprites": [
+["cross*16", [0,0]],
+["straight-x*16", [0,1]],
+["straight-z*16", [0,2]],
+["tee-pz*16", [0,3]],
+["tee-nz*16", [0,4]],
+["tee-nx*16", [0,5]],
+["tee-px*16", [0,6]],
+["corner-pp*16", [0,7]],
+["corner-pn*16", [0,8]],
+["corner-np*16", [0,9]],
+["corner-nn*16", [0,10]],
+["end-nz*16", [0,11]],
+["end-pz*16", [0,12]],
+["none*16", [0,13]],
+["end-px*16", [0,14]],
+["end-nx*16", [0,15]],
+["jacketed*16", [0,16]],
+["jacketed-cross*16", [0,17]],
+["jacketed-end*16", [0,18]]
+]}}
