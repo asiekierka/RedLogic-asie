@@ -52,9 +52,16 @@ public class ItemCustomCircuit extends ItemBlock {
 	}
 
 	public static ItemStack createItemStack(int color, String className) {
+		return createItemStack(color, className, null);
+	}
+
+	public static ItemStack createItemStack(int color, String className, String customName) {
 		ItemStack st = new ItemStack(RedLogicMod.customCircuitBlock, 1, color);
 		st.stackTagCompound = new NBTTagCompound();
 		st.stackTagCompound.setString("classname", className);
+		if (customName != null) {
+			st.setStackDisplayName(customName);
+		}
 		return st;
 	}
 	
@@ -73,7 +80,7 @@ public class ItemCustomCircuit extends ItemBlock {
 		
 		w.setBlock(x, y, z, RedLogicMod.customCircuitBlock, 0, 0);
 		if(w.getBlock(x, y, z) == RedLogicMod.customCircuitBlock) {
-			((TileCustomCircuit)w.getTileEntity(x, y, z)).init(getClassName(stack), getColor(stack), ply);
+			((TileCustomCircuit)w.getTileEntity(x, y, z)).init(stack, ply);
 			stack.stackSize--;
 		}
 		
@@ -82,5 +89,16 @@ public class ItemCustomCircuit extends ItemBlock {
 
 	public static int getColor(ItemStack stack) {
 		return stack.getItemDamage();
+	}
+
+	public static String getDisplayName(ItemStack stack) {
+		if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("display", 10)) {
+			NBTTagCompound nbttagcompound = stack.stackTagCompound.getCompoundTag("display");
+
+			if (nbttagcompound.hasKey("Name", 8)) {
+				return nbttagcompound.getString("Name");
+			}
+		}
+		return null;
 	}
 }

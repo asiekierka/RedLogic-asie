@@ -14,6 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import mods.immibis.core.api.porting.SidedProxy;
 import mods.immibis.core.api.util.Dir;
@@ -86,7 +87,7 @@ public class BlockCustomCircuit extends BlockContainer {
 	private ItemStack getStackFromBlock(World world, int x, int y, int z) {
 		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof TileCustomCircuit) {
-			return ItemCustomCircuit.createItemStack(((TileCustomCircuit) te).getColor(), ((TileCustomCircuit) te).getClassName());
+			return ItemCustomCircuit.createItemStack(((TileCustomCircuit) te).getColor(), ((TileCustomCircuit) te).getClassName(), ((TileCustomCircuit) te).getCustomItemName());
 		} else {
 			return null;
 		}
@@ -142,6 +143,12 @@ public class BlockCustomCircuit extends BlockContainer {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
+		((TileCustomCircuit) world.getTileEntity(x, y, z)).setColor(colour & 15);
+		return true;
 	}
 
 	@Override

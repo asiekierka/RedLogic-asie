@@ -16,6 +16,10 @@ public class TimerGui extends BaseGuiContainer<TimerContainer> {
 		super(par1Container, 256, 84, new ResourceLocation("redlogic", "textures/gui/timer.png"));
 	}
 
+	private List<GuiButton> NEI_getButtonList() {
+		return buttonList;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {

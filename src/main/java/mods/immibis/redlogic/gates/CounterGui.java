@@ -16,6 +16,10 @@ public class CounterGui extends BaseGuiContainer<CounterContainer> {
 		super(par1Container, 256, 164, new ResourceLocation("redlogic", "textures/gui/counter.png"));
 	}
 
+	private List<GuiButton> NEI_getButtonList() {
+		return buttonList;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {

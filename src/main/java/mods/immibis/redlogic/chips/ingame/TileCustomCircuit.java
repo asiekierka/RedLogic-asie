@@ -3,6 +3,7 @@ package mods.immibis.redlogic.chips.ingame;
 import java.util.Arrays;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -33,6 +34,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 
 	private int rotation; // 0 to 3, clockwise (when seen from top)
 	private int color; // matches wool
+	private String customName; // copied from ItemStack
 
 	private boolean isChangeDelayed; // redstone expects changes at most once every 2 in-game ticks
 	private boolean updateQueued = false;
@@ -126,7 +128,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		}
 	}
 
-	public void init(String className, int color, EntityPlayer player) {
+	public void init(ItemStack stack, EntityPlayer player) {
 		Vec3 look = player.getLook(1.0f);
 		
         double absx = Math.abs(look.xCoord);
@@ -145,8 +147,9 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
         
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		
-		this.className = className;
-		this.color = color;
+		this.className = ItemCustomCircuit.getClassName(stack);
+		this.color = ItemCustomCircuit.getColor(stack);
+		this.customName = ItemCustomCircuit.getDisplayName(stack);
 		createCircuitObject();
 
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -181,6 +184,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		tag.setBoolean("cd", isChangeDelayed);
 		tag.setByte("rotation", (byte) rotation);
 		tag.setByte("color", (byte) color);
+		tag.setString("customName", customName);
 	}
 	
 	@Override
@@ -195,6 +199,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		rotation = tag.getByte("rotation");
 		color = tag.getByte("color");
 		isChangeDelayed = tag.getBoolean("cd");
+		customName = tag.getString("customName");
 	}
 	
 	@Override
@@ -350,6 +355,10 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 
 	public int getColor() {
 		return color;
+	}
+
+	public String getCustomItemName() {
+		return customName;
 	}
 
 	public void setColor(int color) {
