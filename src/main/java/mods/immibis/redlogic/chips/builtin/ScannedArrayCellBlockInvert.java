@@ -10,7 +10,7 @@ import mods.immibis.redlogic.api.chips.scanner.IScanProcess;
 import mods.immibis.redlogic.api.chips.scanner.IScannedInput;
 import mods.immibis.redlogic.api.chips.scanner.IScannedOutput;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Opcodes;
 
 public class ScannedArrayCellBlockInvert extends ScannedArrayCellBlock {
 	private static final long serialVersionUID = 1L;
