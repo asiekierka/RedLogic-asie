@@ -1,9 +1,7 @@
 package mods.immibis.redlogic.chips.ingame;
 
-import mods.immibis.redlogic.Utils;
-import mods.immibis.redlogic.api.wiring.*;
-import mods.immibis.redlogic.chips.generated.CCOFactory;
-import mods.immibis.redlogic.chips.generated.CompiledCircuitObject;
+import java.util.Arrays;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -13,14 +11,32 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mods.immibis.redlogic.Utils;
+import mods.immibis.redlogic.api.wiring.IBundledEmitter;
+import mods.immibis.redlogic.api.wiring.IBundledUpdatable;
+import mods.immibis.redlogic.api.wiring.IBundledWire;
+import mods.immibis.redlogic.api.wiring.IConnectable;
+import mods.immibis.redlogic.api.wiring.IRedstoneEmitter;
+import mods.immibis.redlogic.api.wiring.IRedstoneUpdatable;
+import mods.immibis.redlogic.api.wiring.IRedstoneWire;
+import mods.immibis.redlogic.api.wiring.IWire;
+import mods.immibis.redlogic.chips.generated.CCOFactory;
+import mods.immibis.redlogic.chips.generated.CompiledCircuitObject;
+
 public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable, IRedstoneEmitter, IBundledUpdatable, IBundledEmitter, IConnectable {
+	private final boolean[][] circuitOutputs = new boolean[6][];
 
 	private String className = "";
 	private CompiledCircuitObject circuit;
 	private boolean failedCreatingCircuit;
 	private byte[] serializedCircuit;
+
 	private int rotation; // 0 to 3, clockwise (when seen from top)
-	
+	private int color; // matches wool
+
+	private boolean isChangeDelayed; // redstone expects changes at most once every 2 in-game ticks
+	private boolean updateQueued = false;
+
 	public static final int[][] actualToFakeDirMap = new int[][] {
 		{0, 1, 2, 3, 4, 5},
 		{0, 1, 4, 5, 3, 2},
@@ -51,6 +67,17 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 			}
 		}
 	}
+
+	private boolean storeOutputs() {
+		boolean isUpdateNecessary = false;
+		for (int i = 0; i < 6; i++) {
+			if (!Arrays.equals(circuitOutputs[i], circuit._outputs[i])) {
+				isUpdateNecessary = true;
+				circuitOutputs[i] = circuit._outputs[i].clone();
+			}
+		}
+		return isUpdateNecessary;
+	}
 	
 	@Override
 	public void updateEntity() {
@@ -59,7 +86,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 			createCircuitObject();
 		
 		updateQueued = true;
-		if(updateQueued && circuit != null) {
+		if (updateQueued && circuit != null) {
 			updateQueued = false;
 			
 			try {
@@ -70,8 +97,13 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 				e.printStackTrace();
 				return;
 			}
-			
-			notifyExtendedNeighbours();
+
+			if (storeOutputs()) {
+				if (!isChangeDelayed) {
+					notifyExtendedNeighbours();
+					isChangeDelayed = true;
+				}
+			}
 			
 			for(int k = 0; k < 6; k++) {
 				ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[k];
@@ -88,12 +120,13 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 				}
 			}
 		}
+
+		if (isChangeDelayed) {
+			isChangeDelayed = false;
+		}
 	}
-	
-	private boolean updateQueued = false;
-	
-	public void init(String className, EntityPlayer player) {
-		
+
+	public void init(String className, int color, EntityPlayer player) {
 		Vec3 look = player.getLook(1.0f);
 		
         double absx = Math.abs(look.xCoord);
@@ -113,9 +146,9 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		
 		this.className = className;
+		this.color = color;
 		createCircuitObject();
-		
-		
+
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		onRedstoneInputChanged();
 	}
@@ -145,7 +178,9 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 			tag.setByteArray("serialized", serializedCircuit);
 		
 		tag.setBoolean("uq", updateQueued);
-		tag.setInteger("rotation", rotation);
+		tag.setBoolean("cd", isChangeDelayed);
+		tag.setByte("rotation", (byte) rotation);
+		tag.setByte("color", (byte) color);
 	}
 	
 	@Override
@@ -157,19 +192,23 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 			serializedCircuit = tag.getByteArray("serialized");
 
 		updateQueued = tag.getBoolean("uq");
-		rotation = tag.getInteger("rotation");
+		rotation = tag.getByte("rotation");
+		color = tag.getByte("color");
+		isChangeDelayed = tag.getBoolean("cd");
 	}
 	
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("r", rotation);
+		tag.setByte("r", (byte) rotation);
+		tag.setByte("c", (byte) color);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		rotation = pkt.func_148857_g().getInteger("r");
+		rotation = pkt.func_148857_g().getByte("r");
+		color = pkt.func_148857_g().getByte("c");
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
@@ -292,7 +331,7 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord-1, zCoord, getBlockType());
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord+1, zCoord, getBlockType());
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord-1, getBlockType());
-		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord+1, getBlockType());
+		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord + 1, getBlockType());
 	}
 
 	public String getClassName() {
@@ -302,10 +341,19 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 	public void rotate() {
 		rotation = (rotation + 1) & 3;
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		this.markDirty();
 	}
 	
 	public int getRotation() {
 		return rotation;
 	}
 
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	}
 }

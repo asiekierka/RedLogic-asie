@@ -3,10 +3,10 @@ package mods.immibis.redlogic.chips.ingame;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+
 import mods.immibis.core.api.porting.PortableBlockRenderer;
 
 public class BlockCustomCircuitRenderStatic implements PortableBlockRenderer {
-
 	private static int[] rotationMapTop = {0, 1, 3, 2};
 	
 	@Override

@@ -1,10 +1,13 @@
 package mods.immibis.redlogic.gates;
 
-import mods.immibis.core.api.util.BaseGuiContainer;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
+import mods.immibis.core.api.util.BaseGuiContainer;
 
 @SideOnly(Side.CLIENT)
 public class TimerGui extends BaseGuiContainer<TimerContainer> {
@@ -12,7 +15,7 @@ public class TimerGui extends BaseGuiContainer<TimerContainer> {
 	public TimerGui(TimerContainer par1Container) {
 		super(par1Container, 256, 84, new ResourceLocation("redlogic", "textures/gui/timer.png"));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {

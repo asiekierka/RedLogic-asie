@@ -1,10 +1,13 @@
 package mods.immibis.redlogic.gates;
 
-import mods.immibis.core.api.util.BaseGuiContainer;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
+import mods.immibis.core.api.util.BaseGuiContainer;
 
 @SideOnly(Side.CLIENT)
 public class CounterGui extends BaseGuiContainer<CounterContainer> {
@@ -12,7 +15,7 @@ public class CounterGui extends BaseGuiContainer<CounterContainer> {
 	public CounterGui(CounterContainer par1Container) {
 		super(par1Container, 256, 164, new ResourceLocation("redlogic", "textures/gui/counter.png"));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui() {

@@ -1,44 +1,9 @@
 package mods.immibis.redlogic;
 
-import mods.immibis.cobaltite.AssignedBlock;
-import mods.immibis.cobaltite.AssignedItem;
-import mods.immibis.cobaltite.CobaltiteMod;
-import mods.immibis.cobaltite.Configurable;
-import mods.immibis.cobaltite.ModBase;
-import mods.immibis.cobaltite.PacketType;
-import mods.immibis.cobaltite.TileGUI;
-import mods.immibis.cobaltite.CobaltiteMod.RegisteredTile;
-import mods.immibis.core.api.FMLModInfo;
-import mods.immibis.redlogic.array.ArrayCellBlock;
-import mods.immibis.redlogic.array.ArrayCellItem;
-import mods.immibis.redlogic.array.ArrayCellTile;
-import mods.immibis.redlogic.array.BundledCrossoverTile;
-import mods.immibis.redlogic.chips.builtin.RegisterScannables;
-import mods.immibis.redlogic.chips.generated.CCOFactory;
-import mods.immibis.redlogic.chips.ingame.*;
-import mods.immibis.redlogic.gates.*;
-import mods.immibis.redlogic.interaction.BlockLumarButton;
-import mods.immibis.redlogic.interaction.ItemLumarButton;
-import mods.immibis.redlogic.interaction.RenderLumarButtonStatic;
-import mods.immibis.redlogic.interaction.TileLumarButton;
-import mods.immibis.redlogic.lamps.BlockLampCube;
-import mods.immibis.redlogic.lamps.BlockLampNonCube;
-import mods.immibis.redlogic.lamps.ItemLampNonCube;
-import mods.immibis.redlogic.lamps.ItemLampCube;
-import mods.immibis.redlogic.lamps.TileLampNonCube;
-import mods.immibis.redlogic.recipes.RecipesOriginal;
-import mods.immibis.redlogic.wires.BundledTile;
-import mods.immibis.redlogic.wires.EnumWireType;
-import mods.immibis.redlogic.wires.InsulatedRedAlloyTile;
-import mods.immibis.redlogic.wires.PlainRedAlloyTile;
-import mods.immibis.redlogic.wires.SimpleWireUpdateOperation;
-import mods.immibis.redlogic.wires.WireBlock;
-import mods.immibis.redlogic.wires.WireItem;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLogic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.ISaveHandler;
-import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -48,6 +13,59 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
+
+import mods.immibis.cobaltite.AssignedBlock;
+import mods.immibis.cobaltite.AssignedItem;
+import mods.immibis.cobaltite.CobaltiteMod;
+import mods.immibis.cobaltite.CobaltiteMod.RegisteredTile;
+import mods.immibis.cobaltite.Configurable;
+import mods.immibis.cobaltite.ModBase;
+import mods.immibis.cobaltite.PacketType;
+import mods.immibis.cobaltite.TileGUI;
+import mods.immibis.core.api.FMLModInfo;
+import mods.immibis.redlogic.array.ArrayCellBlock;
+import mods.immibis.redlogic.array.ArrayCellItem;
+import mods.immibis.redlogic.array.ArrayCellTile;
+import mods.immibis.redlogic.array.BundledCrossoverTile;
+import mods.immibis.redlogic.chips.builtin.RegisterScannables;
+import mods.immibis.redlogic.chips.generated.CCOFactory;
+import mods.immibis.redlogic.chips.ingame.BlockCustomCircuit;
+import mods.immibis.redlogic.chips.ingame.ContainerChipFabricator;
+import mods.immibis.redlogic.chips.ingame.GuiChipFabricator;
+import mods.immibis.redlogic.chips.ingame.ItemChip;
+import mods.immibis.redlogic.chips.ingame.ItemCustomCircuit;
+import mods.immibis.redlogic.chips.ingame.ItemPhotomask;
+import mods.immibis.redlogic.chips.ingame.ItemSchematic;
+import mods.immibis.redlogic.chips.ingame.TileChipCompiler;
+import mods.immibis.redlogic.chips.ingame.TileChipFabricator;
+import mods.immibis.redlogic.chips.ingame.TileChipScanner;
+import mods.immibis.redlogic.chips.ingame.TileCustomCircuit;
+import mods.immibis.redlogic.chips.ingame.TileIOMarker;
+import mods.immibis.redlogic.gates.CounterContainer;
+import mods.immibis.redlogic.gates.CounterGui;
+import mods.immibis.redlogic.gates.GateBlock;
+import mods.immibis.redlogic.gates.GateItem;
+import mods.immibis.redlogic.gates.GateTile;
+import mods.immibis.redlogic.gates.TimerContainer;
+import mods.immibis.redlogic.gates.TimerGui;
+import mods.immibis.redlogic.interaction.BlockLumarButton;
+import mods.immibis.redlogic.interaction.ItemLumarButton;
+import mods.immibis.redlogic.interaction.RenderLumarButtonStatic;
+import mods.immibis.redlogic.interaction.TileLumarButton;
+import mods.immibis.redlogic.lamps.BlockLampCube;
+import mods.immibis.redlogic.lamps.BlockLampNonCube;
+import mods.immibis.redlogic.lamps.ItemLampCube;
+import mods.immibis.redlogic.lamps.ItemLampNonCube;
+import mods.immibis.redlogic.lamps.TileLampNonCube;
+import mods.immibis.redlogic.recipes.RecipesOriginal;
+import mods.immibis.redlogic.wires.BundledTile;
+import mods.immibis.redlogic.wires.EnumWireType;
+import mods.immibis.redlogic.wires.InsulatedRedAlloyTile;
+import mods.immibis.redlogic.wires.PlainRedAlloyTile;
+import mods.immibis.redlogic.wires.SimpleWireUpdateOperation;
+import mods.immibis.redlogic.wires.WireBlock;
+import mods.immibis.redlogic.wires.WireItem;
 
 @Mod(modid="RedLogic", name="RedLogic", version="59.1.10", dependencies="required-after:ImmibisCore@[59.1.0,]")
 @CobaltiteMod(
@@ -171,6 +189,7 @@ public class RedLogicMod extends ModBase {
 	@Override
 	protected void sharedInit() throws Exception {
 		SimpleWireUpdateOperation.init();
+		UtilsDye.init();
 	}
 	
 	@Override

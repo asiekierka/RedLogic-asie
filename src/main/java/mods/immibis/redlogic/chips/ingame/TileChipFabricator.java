@@ -113,7 +113,7 @@ public class TileChipFabricator extends TilePoweredBase implements ISidedInvento
 				}
 				
 				if(progress >= TICKS_PER_OPERATION) {
-					ItemStack outStack = ItemCustomCircuit.createItemStack(className);
+					ItemStack outStack = ItemCustomCircuit.createItemStack(5, className); // 5 = lime wool
 					progress = 0;
 					if(inv.contents[SLOT_OUT] == null)
 						inv.contents[SLOT_OUT] = outStack;

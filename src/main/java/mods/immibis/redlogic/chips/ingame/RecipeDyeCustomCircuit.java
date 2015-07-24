@@ -1,45 +1,42 @@
-package mods.immibis.redlogic.interaction;
+package mods.immibis.redlogic.chips.ingame;
 
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.RecipeSorter;
 
+import mods.immibis.redlogic.RedLogicMod;
 import mods.immibis.redlogic.UtilsDye;
 
-public class RecipeDyeLumarButton implements IRecipe {
+public class RecipeDyeCustomCircuit implements IRecipe {
 
-	public RecipeDyeLumarButton()
-	{
+	public RecipeDyeCustomCircuit() {
 	}
 	
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting ic) {
 		int colour = -1;
-		int buttonDmg = -1;
+		ItemStack targetStack = null;
 		for(int k = 0; k < ic.getSizeInventory(); k++) {
 			ItemStack s = ic.getStackInSlot(k);
 			if(s != null) {
-				if(s.getItem() instanceof ItemLumarButton) {
-					if(buttonDmg != -1)
-						return null;
-					buttonDmg = s.getItemDamage();
-				
+				if(s.getItem() instanceof ItemCustomCircuit) {
+					targetStack = s.copy();
 				} else if(colour == -1) {
 					colour = UtilsDye.getDyeColor(s);
-
-					if(colour == -1)
-						return null;
-				} else
+				} else {
 					return null;
+				}
 			}
 		}
-		
-		if(colour == -1 || buttonDmg == -1)
+
+		if(colour == -1 || targetStack == null || !targetStack.hasTagCompound())
 			return null;
-		
-		return TileLumarButton.getItemStack(colour, TileLumarButton.getTypeFromDamage(buttonDmg), TileLumarButton.getModelFromDamage(buttonDmg));
+
+		targetStack.setItemDamage(colour);
+		return targetStack;
 	}
 	
 	@Override
@@ -49,7 +46,7 @@ public class RecipeDyeLumarButton implements IRecipe {
 	
 	@Override
 	public ItemStack getRecipeOutput() {
-		return TileLumarButton.getItemStack(0, LumarButtonType.Normal, LumarButtonModel.Button);
+		return new ItemStack(Item.getItemFromBlock(RedLogicMod.customCircuitBlock));
 	}
 	
 	@Override
@@ -58,6 +55,6 @@ public class RecipeDyeLumarButton implements IRecipe {
 	}
 	
 	static {
-		RecipeSorter.register(RecipeDyeLumarButton.class.getName(), RecipeDyeLumarButton.class, RecipeSorter.Category.SHAPELESS, "");
+		RecipeSorter.register(RecipeDyeCustomCircuit.class.getName(), RecipeDyeCustomCircuit.class, RecipeSorter.Category.SHAPELESS, "");
 	}
 }

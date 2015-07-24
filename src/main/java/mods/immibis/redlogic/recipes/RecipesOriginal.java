@@ -1,10 +1,18 @@
 package mods.immibis.redlogic.recipes;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
 import mods.immibis.core.api.util.Colour;
 import mods.immibis.redlogic.RLMachineBlock;
 import mods.immibis.redlogic.RLNormalBlock;
 import mods.immibis.redlogic.api.misc.ILampBlock.LampType;
 import mods.immibis.redlogic.array.ArrayCellType;
+import mods.immibis.redlogic.chips.ingame.RecipeDyeCustomCircuit;
 import mods.immibis.redlogic.gates.EnumGates;
 import mods.immibis.redlogic.interaction.LumarButtonModel;
 import mods.immibis.redlogic.interaction.LumarButtonType;
@@ -14,13 +22,15 @@ import mods.immibis.redlogic.lamps.BlockLampNonCube;
 import mods.immibis.redlogic.lamps.ItemLampNonCube;
 import mods.immibis.redlogic.wires.EnumWireType;
 import mods.immibis.redlogic.wires.WireDamageValues;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cpw.mods.fml.common.registry.GameRegistry;
-import static mods.immibis.redlogic.RedLogicMod.*;
+import static mods.immibis.redlogic.RedLogicMod.arrayCells;
+import static mods.immibis.redlogic.RedLogicMod.gates;
+import static mods.immibis.redlogic.RedLogicMod.lampCubeDecorative;
+import static mods.immibis.redlogic.RedLogicMod.lampCubeIndicatorOff;
+import static mods.immibis.redlogic.RedLogicMod.lampCubeOff;
+import static mods.immibis.redlogic.RedLogicMod.machineBlock;
+import static mods.immibis.redlogic.RedLogicMod.plainBlock;
+import static mods.immibis.redlogic.RedLogicMod.screwdriver;
+import static mods.immibis.redlogic.RedLogicMod.wire;
 
 public class RecipesOriginal {
 
@@ -528,6 +538,7 @@ public class RecipesOriginal {
 		}
 		
 		GameRegistry.addRecipe(new RecipeDyeLumarButton());
+		GameRegistry.addRecipe(new RecipeDyeCustomCircuit());
 		
 		GameRegistry.addRecipe(new ItemStack(plainBlock, 16, RLNormalBlock.META_CLEANWALL),
 			"SBS",
