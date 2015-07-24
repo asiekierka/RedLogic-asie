@@ -184,7 +184,9 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		tag.setBoolean("cd", isChangeDelayed);
 		tag.setByte("rotation", (byte) rotation);
 		tag.setByte("color", (byte) color);
-		tag.setString("customName", customName);
+		if (tag.hasKey("customName")) {
+			tag.setString("customName", customName);
+		}
 	}
 	
 	@Override
@@ -199,7 +201,9 @@ public class TileCustomCircuit extends TileEntity implements IRedstoneUpdatable,
 		rotation = tag.getByte("rotation");
 		color = tag.getByte("color");
 		isChangeDelayed = tag.getBoolean("cd");
-		customName = tag.getString("customName");
+		if (customName != null && customName.length() > 0) {
+			customName = tag.getString("customName");
+		}
 	}
 	
 	@Override
