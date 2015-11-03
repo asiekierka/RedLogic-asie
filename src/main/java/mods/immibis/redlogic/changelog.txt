@@ -1,3 +1,6 @@
+59.1.11:
+* Fixed crash when opening GUIs. (Sorry!)
+
 59.1.10:
 * Microblock API update. (Goes with Immibis Core 59.1.0 and Immibis's Microblocks 59.1.0)
 

@@ -18,12 +18,12 @@ public class TimerGui extends BaseGuiContainer<TimerContainer> {
 	public void initGui() {
 		super.initGui();
 		
-		NEI_getButtonList().add(new GuiButton(0, guiLeft +   5, guiTop + 52, 40, 20, "-10s"));
-		NEI_getButtonList().add(new GuiButton(1, guiLeft +  46, guiTop + 52, 40, 20, "-1s"));
-		NEI_getButtonList().add(new GuiButton(2, guiLeft +  87, guiTop + 52, 40, 20, "-50ms"));
-		NEI_getButtonList().add(new GuiButton(3, guiLeft + 129, guiTop + 52, 40, 20, "+50ms"));
-		NEI_getButtonList().add(new GuiButton(4, guiLeft + 170, guiTop + 52, 40, 20, "+1s"));
-		NEI_getButtonList().add(new GuiButton(5, guiLeft + 211, guiTop + 52, 40, 20, "+10s"));
+		buttonList.add(new GuiButton(0, guiLeft +   5, guiTop + 52, 40, 20, "-10s"));
+		buttonList.add(new GuiButton(1, guiLeft +  46, guiTop + 52, 40, 20, "-1s"));
+		buttonList.add(new GuiButton(2, guiLeft +  87, guiTop + 52, 40, 20, "-50ms"));
+		buttonList.add(new GuiButton(3, guiLeft + 129, guiTop + 52, 40, 20, "+50ms"));
+		buttonList.add(new GuiButton(4, guiLeft + 170, guiTop + 52, 40, 20, "+1s"));
+		buttonList.add(new GuiButton(5, guiLeft + 211, guiTop + 52, 40, 20, "+10s"));
 	}
 
 	@Override
