@@ -28,12 +28,12 @@ public class CounterGui extends BaseGuiContainer<CounterContainer> {
 		for(int row = 0; row < 3; row++) {
 			int y = guiTop + 16 + 40*row;
 			int k = row * 8;
-			NEI_getButtonList().add(new GuiButton(k+0, guiLeft +   5, y, 40, 20, "-10"));
-			NEI_getButtonList().add(new GuiButton(k+1, guiLeft +  46, y, 40, 20, "-5"));
-			NEI_getButtonList().add(new GuiButton(k+2, guiLeft +  87, y, 40, 20, "-1"));
-			NEI_getButtonList().add(new GuiButton(k+3, guiLeft + 129, y, 40, 20, "+1"));
-			NEI_getButtonList().add(new GuiButton(k+4, guiLeft + 170, y, 40, 20, "+5"));
-			NEI_getButtonList().add(new GuiButton(k+5, guiLeft + 211, y, 40, 20, "+10"));
+			buttonList.add(new GuiButton(k+0, guiLeft +   5, y, 40, 20, "-10"));
+			buttonList.add(new GuiButton(k+1, guiLeft +  46, y, 40, 20, "-5"));
+			buttonList.add(new GuiButton(k+2, guiLeft +  87, y, 40, 20, "-1"));
+			buttonList.add(new GuiButton(k+3, guiLeft + 129, y, 40, 20, "+1"));
+			buttonList.add(new GuiButton(k+4, guiLeft + 170, y, 40, 20, "+5"));
+			buttonList.add(new GuiButton(k+5, guiLeft + 211, y, 40, 20, "+10"));
 		}
 	}
 

@@ -30,6 +30,9 @@ file "build.properties" withReader {
 	ext.config = new ConfigSlurper().parse prop
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 version = "${config.minecraft.version}-${config.redlogic.version}"
 group = "mods.immibis.redlogic" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "RedLogic"

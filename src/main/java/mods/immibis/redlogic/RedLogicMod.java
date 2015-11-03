@@ -67,7 +67,7 @@ import mods.immibis.redlogic.wires.SimpleWireUpdateOperation;
 import mods.immibis.redlogic.wires.WireBlock;
 import mods.immibis.redlogic.wires.WireItem;
 
-@Mod(modid="RedLogic", name="RedLogic", version="59.1.10", dependencies="required-after:ImmibisCore@[59.1.0,]")
+@Mod(modid="RedLogic", name="RedLogic", version="59.1.11", dependencies="required-after:ImmibisCore@[59.1.0,]")
 @CobaltiteMod(
 		tiles = {
 				@RegisteredTile(id="immibis.redlogic.gate", tile=GateTile.class, render="mods.immibis.redlogic.gates.GateDynamicRenderer"),
