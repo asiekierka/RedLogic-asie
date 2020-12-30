@@ -1,3 +1,17 @@
+59.1.13:
+* Fixed wires dropping even in creative mode.
+
+59.1.12:
+* Fixed integrated circuits outputting signals in the wrong direction when used with vanilla redstone.
+  This fix affects all existing integrated circuits.
+* Fixed NOT gate torch visuals when the center output is disabled.
+* Fixed insulated wire being named wrongly in Turkish locales.
+* Fixed integrated circuits getting confused about whether they were supposed to have bundled or single-wire inputs and outputs.
+  ICs affected by this must be re-scanned.
+* Fixed being able to combine stacks of different types of lumar buttons.
+* Fixed the chip compiler getting stuck if compilation fails for any reason.
+* Fixed the chip compiler not reporting internal errors to the player using it.
+
 59.1.11:
 * Fixed crash when opening GUIs. (Sorry!)
 

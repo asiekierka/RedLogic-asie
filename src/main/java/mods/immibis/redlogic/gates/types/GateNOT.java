@@ -91,7 +91,7 @@ public class GateNOT {
 				| (inputs[BACK] != 0 ? 2 : 0)
 				| (inputs[LEFT] != 0 || outputs[LEFT] != 0 ? 4 : 0)
 				| (inputs[RIGHT] != 0 || outputs[RIGHT] != 0 ? 8 : 0)
-				| (outputs[FRONT] != 0 ? 16 : 0)
+				| ((outputs[FRONT] | outputs[LEFT] | outputs[RIGHT]) != 0 ? 16 : 0)
 				| (gateSettings << 5);
 		}
 		@Override
@@ -106,7 +106,7 @@ public class GateNOT {
 		}
 		@Override
 		public int configure(int gateSettings) {
-			return (gateSettings + 1) & 7;
+			return (gateSettings + 1) % 7;
 		}
 	}
 	

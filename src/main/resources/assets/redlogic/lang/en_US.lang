@@ -395,6 +395,7 @@ redlogic.chipscanner.cantfindroom=No room demarcation found.
 redlogic.chipscanner.roomcoords=Cleanroom coordinates: %d,%d,%d to %d,%d,%d
 
 redlogic.chipcompiler.status=%d ticks left.
+redlogic.chipcompiler.error=Compilation error: %s
 
 redlogic.button.lightmode.0=Light mode: Default
 redlogic.button.lightmode.1=Light mode: Inverted

@@ -1,6 +1,7 @@
 package mods.immibis.redlogic.chips.ingame;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -63,6 +64,7 @@ public class TileChipCompiler extends TilePoweredBase {
 	private int ticksLeft = 0;
 	private boolean isRunning;
 	private CompileThread compileThread;
+	private String errorMessage = null;
 	
 	@Override
 	public void updateEntity() {
@@ -75,7 +77,7 @@ public class TileChipCompiler extends TilePoweredBase {
 		if(visualState != oldVS)
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		
-		if(inv.contents[0] != null && inv.contents[0].getItem() == RedLogicMod.schematicItem && inv.contents[1] == null) {
+		if(inv.contents[0] != null && inv.contents[0].getItem() == RedLogicMod.schematicItem && inv.contents[1] == null && errorMessage == null) {
 			if(!isRunning) {
 				File file = ItemSchematic.getFile(worldObj, inv.contents[0]);
 				if(file != null) {
@@ -94,8 +96,21 @@ public class TileChipCompiler extends TilePoweredBase {
 				String className = compileThread.getResult();
 				if(className != null)
 					inv.contents[1] = ItemPhotomask.createItemStack(className);
-				else
-					isRunning = false; // restart process
+				else {
+					String error;
+					if (compileThread.exception != null) {
+						error = compileThread.exception.toString();
+					} else {
+						error = "Unknown error";
+					}
+					
+					EntityPlayer ply = (activatingPlayer == null ? null : activatingPlayer.get());
+					if (ply != null)
+						ply.addChatMessage(new ChatComponentTranslation("redlogic.chipcompiler.error", error));
+					
+					isRunning = false;
+					errorMessage = error; // don't keep restarting the process
+				}
 			}
 		} else {
 			if(isRunning) {
@@ -106,17 +121,25 @@ public class TileChipCompiler extends TilePoweredBase {
 		}
 	}
 	
+	private WeakReference<EntityPlayer> activatingPlayer;
+	
 	@Override
 	public boolean onBlockActivated(EntityPlayer ply) {
 		if(worldObj.isRemote)
 			return true;
 		
+		activatingPlayer = new WeakReference<>(ply);
+		
 		ItemStack holding = ply.getCurrentEquippedItem();
 		
 		if(holding == null) {
-			if(isRunning) {
+			if(isRunning && errorMessage == null) {
 				ply.addChatMessage(new ChatComponentTranslation("redlogic.chipcompiler.status", new Object[]{ticksLeft}));
 			} else if(inv.contents[0] != null) {
+				if(errorMessage != null) {
+					ply.addChatMessage(new ChatComponentTranslation("redlogic.chipcompiler.error", errorMessage));
+					errorMessage = null;
+				}
 				ply.inventory.setInventorySlotContents(ply.inventory.currentItem, inv.contents[0]);
 				inv.contents[0] = null;
 			} else if(inv.contents[1] != null) {
@@ -170,6 +193,7 @@ public class TileChipCompiler extends TilePoweredBase {
 		
 		private FutureTask<String> future;
 		private Thread thread;
+		Throwable exception;
 		
 		public CompileThread(File schematicFile) {
 			this.schematicFile = schematicFile;
@@ -190,6 +214,7 @@ public class TileChipCompiler extends TilePoweredBase {
 			try {
 				return future.get();
 			} catch(ExecutionException e) {
+				this.exception = e.getCause();
 				new Exception("Schematic compiling failed", e).printStackTrace();
 				return null;
 			} catch(InterruptedException e) {

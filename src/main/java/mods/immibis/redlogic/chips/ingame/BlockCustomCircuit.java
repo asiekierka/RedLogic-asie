@@ -89,12 +89,12 @@ public class BlockCustomCircuit extends BlockContainer {
 	
 	@Override
 	public int isProvidingStrongPower(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
-		return ((TileCustomCircuit)par1iBlockAccess.getTileEntity(par2, par3, par4)).getEmittedSignalStrength(-1, par5);
+		return ((TileCustomCircuit)par1iBlockAccess.getTileEntity(par2, par3, par4)).getEmittedSignalStrength(-1, par5^1);
 	}
 	
 	@Override
 	public int isProvidingWeakPower(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
-		return ((TileCustomCircuit)par1iBlockAccess.getTileEntity(par2, par3, par4)).getEmittedSignalStrength(-1, par5);
+		return ((TileCustomCircuit)par1iBlockAccess.getTileEntity(par2, par3, par4)).getEmittedSignalStrength(-1, par5^1);
 	}
 	
 	@Override

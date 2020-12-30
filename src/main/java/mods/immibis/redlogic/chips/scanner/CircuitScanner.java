@@ -8,6 +8,8 @@ import mods.immibis.redlogic.api.chips.scanner.IScannedBlock;
 import mods.immibis.redlogic.api.chips.scanner.IScannedNode;
 import mods.immibis.redlogic.chips.builtin.ScannedCableBlock;
 import mods.immibis.redlogic.chips.builtin.ScannedCableBlockSingle;
+import mods.immibis.redlogic.chips.builtin.ScannedOutputBlock;
+import mods.immibis.redlogic.chips.builtin.ScannedInputBlock;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
@@ -126,6 +128,11 @@ public final class CircuitScanner {
 			if(sb == null)
 				continue;
 			
+			// XXX HACK to avoid creating the wrong types of I/O nodes - the type of an I/O node isn't set
+			// until a wire tries to connect to an I/O marker.
+			if(sb instanceof ScannedInputBlock || sb instanceof ScannedOutputBlock)
+				continue;
+			
 			for(int dir = 0; dir < 6; dir++) {
 				
 				IScannedNode jnode = sb.getNode(-1, dir);
@@ -142,6 +149,7 @@ public final class CircuitScanner {
 				
 				for(int ws = 0; ws < 6; ws++) {
 					if((ws & 6) == (dir & 6)) continue;
+					
 					IScannedNode node = sb.getNode(ws, dir);
 					if(node != null) {
 						ForgeDirection fd = ForgeDirection.VALID_DIRECTIONS[dir];

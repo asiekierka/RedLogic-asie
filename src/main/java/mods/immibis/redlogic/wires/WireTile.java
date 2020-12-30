@@ -851,7 +851,8 @@ public abstract class WireTile extends TileCoverableMultipartBase implements ICo
 			if(!removeJacketedWire())
 				return;
 			
-			RedLogicMod.wire.dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, getJacketedDrop());
+			if(harvest)
+				RedLogicMod.wire.dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, getJacketedDrop());
 			return;
 		}
 		
@@ -859,7 +860,8 @@ public abstract class WireTile extends TileCoverableMultipartBase implements ICo
 			return;
 		if(!removeWireOnSide(part))
 			return;
-		RedLogicMod.wire.dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(RedLogicMod.wire, 1, type.ordinal()));
+		if(harvest)
+			RedLogicMod.wire.dropBlockAsItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(RedLogicMod.wire, 1, type.ordinal()));
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package mods.immibis.redlogic.wires;
 
+import java.util.Locale;
+
 import mods.immibis.core.api.util.Dir;
 import mods.immibis.microblocks.api.EnumPosition;
 import mods.immibis.microblocks.api.IMicroblockCoverSystem;
@@ -31,7 +33,7 @@ public class WireItem extends ItemBlock {
 		if(type == null)
 			return "item.redlogic.invalid";
 		
-		String name = "item.redlogic.wire." + type.name().toLowerCase().replace('_', '-');
+		String name = "item.redlogic.wire." + type.name().toLowerCase(Locale.ROOT).replace('_', '-');
 		
 		if(jacketed)
 			name += ".j";

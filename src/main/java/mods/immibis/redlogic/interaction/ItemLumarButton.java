@@ -18,6 +18,7 @@ public class ItemLumarButton extends ItemBlock {
 	
 	public ItemLumarButton(Block block) {
 		super(block);
+		setHasSubtypes(true);
 	}
 	
 	private static final String hexDigits = "0123456789abcdef";
